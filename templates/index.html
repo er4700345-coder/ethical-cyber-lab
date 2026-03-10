@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ethical Cyber Lab</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <img src="{{ url_for('static', filename='hacker-face.gif') }}" class="hacker-face">
+    <h1>Ethical Cyber Lab 🌐</h1>
+    <form method="POST">
+        <select name="module">
+            <option value="recon">Recon</option>
+            <option value="sqli">SQLi</option>
+            <option value="xss">XSS</option>
+            <option value="csrf">CSRF</option>
+        </select>
+        <input type="text" name="target" placeholder="Enter target URL or domain" required>
+        <button type="submit">Run</button>
+    </form>
+    {% if result %}
+    <pre class="result">{{ result }}</pre>
+    {% endif %}
+</div>
+</body>
+</html>
