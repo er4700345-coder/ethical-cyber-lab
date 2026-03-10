@@ -1,10 +1,10 @@
 import sys
 import subprocess
-import threading
-import time
 from colorama import Fore, Style
 
+# ---------------------------
 # ASCII Hacker Banner
+# ---------------------------
 banner = f"""
 {Fore.CYAN}
    _____ _   _ _   _ _       _     _        _ 
@@ -28,38 +28,40 @@ Usage:
 {Fore.YELLOW}python cyberlab.py sqli <url>{Style.RESET_ALL}
 {Fore.YELLOW}python cyberlab.py xss <url>{Style.RESET_ALL}
 {Fore.YELLOW}python cyberlab.py csrf <url>{Style.RESET_ALL}
+{Fore.YELLOW}python cyberlab.py ip <ip_address>{Style.RESET_ALL}
 
 Example:
 
 python cyberlab.py recon example.com
+python cyberlab.py sqli http://testphp.vulnweb.com/listproducts.php?cat=1
+python cyberlab.py xss http://testphp.vulnweb.com/search.php?test=
+python cyberlab.py csrf http://example.com/login
+python cyberlab.py ip 8.8.8.8
 """)
     sys.exit()
 
 tool = sys.argv[1]
 target = sys.argv[2]
 
-# Thread wrapper for faster port scanning (used in recon)
-def thread_target(func, args):
-    thread = threading.Thread(target=func, args=args)
-    thread.start()
-    return thread
+# ---------------------------
+# Module Execution
+# ---------------------------
 
-# Recon module
 if tool == "recon":
     subprocess.call(["python3", "recon_scripts/recon.py", target])
 
-# SQLi module
 elif tool == "sqli":
     subprocess.call(["python3", "sql_injection/sqli_test.py", target])
 
-# XSS module
 elif tool == "xss":
     subprocess.call(["python3", "xss_scanner/xss_test.py", target])
 
-# CSRF module
 elif tool == "csrf":
     subprocess.call(["python3", "csrf_checker/csrf_check.py", target])
 
+elif tool == "ip":
+    subprocess.call(["python3", "ip_intel/ip_lookup.py", target])
+
 else:
     print(f"{Fore.RED}[!] Unknown module{Style.RESET_ALL}")
-    print("Available modules: recon, sqli, xss, csrf")
+    print("Available modules: recon, sqli, xss, csrf, ip")
